@@ -15,4 +15,10 @@ router.get('/login', function(req, res, next) {
     'title': 'Login'
   });
 });
+router.get('/logout', function(req, res, next) {
+  res.render('logout',{
+    'title': 'Logout'
+  });
+});
+
 module.exports = router;
