@@ -21,7 +21,7 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
-router.post('/users/register', function(req, res, next){
+router.post('/register', function(req, res, next){
 
   var name = req.body.name;
   var email = req.body.email;
@@ -54,6 +54,43 @@ router.post('/users/register', function(req, res, next){
   req.checkBody('username','Username field is required').notEmpty;
   req.checkBody('password','Password field is required').notEmpty;
   req.checkBody('password2','password doesn not match').equals(req.body.password);
+
+
+  var errors = vaildationErrors();
+
+  if(errors){
+    res.render('register',{
+      errors: errors,
+      name: name,
+      email: email,
+      username:username,
+      password:password,
+      password2: password2
+    });
+  }else {
+    var newUser = new User({
+      name: name,
+      email: email,
+      username:username,
+      password:password,
+      profileimage: profileImageName
+    });
+
+
+  }
+
+
+  //User.createUser(newUser,function(err,user){
+  //  if(err) throw err;
+  //  console.log(user);
+
+  //});
+
+  req.flash('success', 'yor are registered');
+
+  res.location('/');
+  res.redirect('/');
+
 
 });
 module.exports = router;
